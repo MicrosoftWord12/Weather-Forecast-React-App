@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import { config } from "dotenv";
+// config();
+import React, { useState } from 'react';
+import NavigationBar  from './Components/Navbar/NavigationBar';
+import Weather from './Components/Weather/Weather';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [navList, setNavList] = useState([
+        {id: 1, Name: "Home", Endpoint: "/"},
+        {id: 2, Name: "About", Endpoint: "/about"},
+        {id: 3, Name: "Contact", Endpoint: "/contact"},
+    ]);
+
+    return (
+        <div>
+            <NavigationBar NavigationPropList={navList}/>
+            <Weather />
+        </div>
+    );
 }
 
 export default App;
