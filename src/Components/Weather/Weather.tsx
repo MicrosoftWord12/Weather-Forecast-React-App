@@ -14,7 +14,7 @@ const Weather = () => {
         const fetchedData = async () => {
             try{
 
-                const data = await weatherApi.sendWeatherRequest()
+                const data = await weatherApi.sendWeatherRequest("london")
 
                 setWeatherResponse(data)
 

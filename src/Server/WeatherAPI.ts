@@ -7,12 +7,14 @@ export default class WeatherAPI {
     private API_KEY: string = Config.API_KEY || "";
     // private API_URL: string = "https://api.openweathermap.org/data/3.0/onecall?"
     private API_URL: string = "http://api.weatherapi.com/v1/current.json"
+    private API_URL_LOCATION: string = "London"
 
     private weatherCurrent: WeatherCurrent | undefined
     private weatherLocation: WeatherLocation | undefined
     
-    public async sendWeatherRequest() {
-        const url = `${this.API_URL}?key=${this.API_KEY}&q=London}`
+    public async sendWeatherRequest(API_URL_LOCATION: string) {
+        this.API_URL_LOCATION = API_URL_LOCATION;
+        const url = `${this.API_URL}?key=${this.API_KEY}&q=${this.API_URL_LOCATION}}`
         
         try{
             const response = await fetch(url)
