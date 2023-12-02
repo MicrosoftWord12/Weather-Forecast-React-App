@@ -5,6 +5,9 @@ import { WeatherResponse } from '../../Types/WeatherTypes'
 const Weather = () => {
 
     const [weatherResponse, setWeatherResponse] = React.useState<WeatherResponse>({} as WeatherResponse)
+    const [location, setLocation] = React.useState<string>('')
+    const [intervalTimer, setIntervalTimer] = React.useState<NodeJS.Timer>()
+    const [defaultValue, setDefaultValue] = React.useState<string>('London')
 
     const weatherApi = React.useMemo(() => new WeatherAPI(), [])
 
@@ -12,7 +15,7 @@ const Weather = () => {
         const fetchedData = async () => {
             try{
 
-                const data = await weatherApi.sendWeatherRequest("london")
+                const data = await weatherApi.sendWeatherRequest(location ? location : defaultValue)
 
                 setWeatherResponse(data)
 
@@ -20,15 +23,22 @@ const Weather = () => {
                 console.error('Error fetching data: ', error)
             }
         }
+
         fetchedData()
-    }, [weatherApi])
 
 
-    const input = (data: FormEvent) => {
+    }, [weatherApi, location])
+
+
+    const input = async (data: FormEvent) => {
         data.preventDefault()
         const dataInput = new FormData(data.target as HTMLFormElement)
         const dataInputString = dataInput.get('locationInput')
-        weatherApi.sendWeatherRequest(dataInputString as string)
+
+        console.log(dataInputString)
+        setLocation(dataInputString as string)
+        let weatherData = await weatherApi.sendWeatherRequest(dataInputString as string)        
+        setWeatherResponse(weatherData)
     }
 
     return (
@@ -39,14 +49,14 @@ const Weather = () => {
 
                 <form className="flex flex-col justify-center text-center bg-slate-300 rounded-md p-2 m-2" onSubmit={(e) => input(e)}>
                     <label className="mb-2" htmlFor="locationInput">Enter Location Here</label>
-                    <input className="mb-2 rounded-md text-center bg-slate-400 text-white placeholder:text-white" id="locationInput" type="text" placeholder='Location' name='locationInput'/>
-                    <input className="mb-2 hover:bg-slate-500 p-2 cursor-pointer bg-slate-300 rounded-xl" type="submit" value="Submit Location" />
+                    <input className="mb-2 rounded-md text-center bg-slate-400 text-white placeholder:text-white" id="locationInput" type="text" placeholder='Location' name='locationInput' defaultValue={defaultValue} />
+                    <input className="mb-2 hover:bg-slate-500 p-2 cursor-pointer bg-slate-300 rounded-xl border-2 border-black" type="submit" value="Submit Location"/>
                 </form>
 
 
                 <div className='text-center text-xl'>
                     <div>
-                        <p>City: {weatherApi.getRegion()}</p>
+                        <p>City: {weatherApi.getName()}</p>
                     </div>
                     <div>
                         <p>Country: {weatherApi.getCountry()}</p>

@@ -16,6 +16,9 @@ export default class WeatherAPI {
         this.API_URL_LOCATION = API_URL_LOCATION;
         const url = `${this.API_URL}?key=${this.API_KEY}&q=${this.API_URL_LOCATION}}`
         
+        if(!this.API_URL_LOCATION) throw new Error("No location provided")
+
+
         try{
             const response = await fetch(url)
             const data = await response.json()
