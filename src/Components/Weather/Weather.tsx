@@ -62,7 +62,7 @@ const Weather = () => {
                         <p>Country: {weatherApi.getCountry()}</p>
                     </div>
                     <div>
-                        <p>Day: {weatherApi.getFeelsLikeF()}</p>
+                        <p>Temperature: {weatherApi.getFeelsLikeC() + "C"}</p>
                     </div>
                 </div>
             </div>
