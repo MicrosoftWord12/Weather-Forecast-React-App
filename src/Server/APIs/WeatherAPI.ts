@@ -1,7 +1,7 @@
-import { WeatherRequest, WeatherResponse, WeatherLocationType, WeatherCondition } from "../Types/WeatherTypes";
-import Config from "../Config.json"
-import WeatherCurrent from "./Data/WeatherCurrent";
-import WeatherLocation from "./Data/WeatherLocation";
+import { WeatherRequest, WeatherResponse, WeatherLocationType, WeatherCondition } from "../../Types/WeatherTypes";
+import Config from "../../Config.json"
+import WeatherCurrent from "../Data/WeatherCurrent";
+import WeatherLocation from "../Data/WeatherLocation";
 
 export default class WeatherAPI {
     private API_KEY: string = Config.API_KEY || "";
