@@ -9,10 +9,12 @@ export interface INavigationPropList {
 }
 
 export interface IAlertProps {
-    hidden: boolean;
+    isShowing: boolean;
+    message?: string;
 }
 
 export interface IWeatherAlertProps {
     setAlert: (isAlertEnabled: boolean) => void;
+    setAlertMessage: (alertMessage: string) => void;
 }
 
