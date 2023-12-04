@@ -1,9 +1,7 @@
-import React from 'react'
-import NavigationProps from '../../Types/PropTypes/NavigationProps'
-import { NavigationButton } from './NavigationButton'
-import NavigationPropList from '../../Types/PropTypes/NavigationProps'
+import NavigationButton from './NavigationButton'
+import { INavigationPropList } from '../../Types/ComponentProps'
 
-export const NavigationBar = ({ NavigationPropList }: NavigationPropList) => {
+export const NavigationBar = ({ NavigationPropList }: INavigationPropList) => {
   return (
     <div>
         <ul className='flex flex-row-reverse bg-gray-400 w-full'>
