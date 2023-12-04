@@ -14,11 +14,6 @@ const Weather = ({ setAlert, setAlertMessage }: IWeatherAlertProps) => {
         const fetchedData = async () => {
             try{
                 const response = await weatherApi.sendWeatherRequest(currentLocation ? currentLocation : defaultValue)
-                if(!response?.ok){
-                    setAlert(true)
-                    setAlertMessage(`Data For *${currentLocation}* Could not be Found`)
-                    return;
-                }
                 setDataUpdated((prev) => !prev)
             }catch(error){
                 console.error('Error fetching data: ', error)
@@ -35,7 +30,14 @@ const Weather = ({ setAlert, setAlertMessage }: IWeatherAlertProps) => {
         setAlert(false)
         const dataInput = new FormData(data.target as HTMLFormElement)
         const dataInputString = dataInput.get('locationInput')
-        await weatherApi.sendWeatherRequest(dataInputString as string)        
+        const response = await weatherApi.sendWeatherRequest(dataInputString as string)      
+
+        if(!response?.ok){
+            setAlert(true)
+            setAlertMessage(`Data For *${dataInputString}* Could not be Found`)
+            return;
+        }
+        
         setCurrentLocation(dataInputString as string)
     }
 
