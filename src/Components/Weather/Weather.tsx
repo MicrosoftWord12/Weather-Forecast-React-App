@@ -1,23 +1,22 @@
-import React, { FormEvent } from 'react'
+import { FormEvent, useState, useEffect, useMemo, useRef } from 'react'
 import WeatherAPI from '../../Server/APIs/WeatherAPI'
 import { WeatherResponse } from '../../Types/WeatherTypes'
+import { IWeatherAlertProps } from '../../Types/ComponentProps'
 
-const Weather = () => {
+const Weather = (props: IWeatherAlertProps) => {
 
-    const [weatherResponse, setWeatherResponse] = React.useState<WeatherResponse>({} as WeatherResponse)
-    const [location, setLocation] = React.useState<string>('')
-    const [intervalTimer, setIntervalTimer] = React.useState<NodeJS.Timer>()
-    const [defaultValue, setDefaultValue] = React.useState<string>('London')
+    const [weatherResponse, setWeatherResponse] = useState<WeatherResponse>({} as WeatherResponse)
+    // const [location, setLocation] = useState<string>('')
+    const defaultValue  = 'London'
+    const locationRef = useRef<string>(defaultValue)
 
-    const weatherApi = React.useMemo(() => new WeatherAPI(), [])
+    const weatherApi = useMemo(() => new WeatherAPI(), [])
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchedData = async () => {
             try{
 
-                const data = await weatherApi.sendWeatherRequest(location ? location : defaultValue)
-
-                setWeatherResponse(data)
+                await weatherApi.sendWeatherRequest(locationRef.current ? locationRef.current : defaultValue)
 
             }catch(error){
                 console.error('Error fetching data: ', error)
@@ -27,7 +26,7 @@ const Weather = () => {
         fetchedData()
 
 
-    }, [weatherApi, location])
+    }, [locationRef.current])
 
 
     const input = async (data: FormEvent) => {
@@ -35,9 +34,14 @@ const Weather = () => {
         const dataInput = new FormData(data.target as HTMLFormElement)
         const dataInputString = dataInput.get('locationInput')
 
-        console.log(dataInputString)
-        setLocation(dataInputString as string)
+        if(dataInputString === null || dataInputString === "Test"){
+            props.setAlert(true)
+        }
+
         let weatherData = await weatherApi.sendWeatherRequest(dataInputString as string)        
+        locationRef.current = dataInputString as string
+
+        // setLocation(dataInputString as string)
         setWeatherResponse(weatherData)
     }
 
