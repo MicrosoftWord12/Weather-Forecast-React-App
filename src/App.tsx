@@ -5,22 +5,21 @@ import Alert from './Components/Alert/Alert';
 
 
 function App() {
-    const [navList, setNavList] = useState([
+    const navigationList = [
         {id: 1, Name: "Home", Endpoint: "/"},
         {id: 2, Name: "About", Endpoint: "/about"},
         {id: 3, Name: "Contact", Endpoint: "/contact"},
-    ]);
+    ]
 
 
-    const [alertStatus, setAlertStatus] = useState(false);
-
-
+    const [alertStatus, setAlertStatus] = useState<boolean>(false);
+    const [alertMessage, setAlertMessage] = useState<string>("");
 
     return (
         <div>
-            <NavigationBar NavigationPropList={navList}/>
-            <Alert hidden={alertStatus} />
-            <Weather setAlert={setAlertStatus}/>
+            <NavigationBar NavigationPropList={navigationList}/>
+            <Alert isShowing={alertStatus!} message={alertMessage} />
+            <Weather setAlert={setAlertStatus} setAlertMessage={setAlertMessage} />
         </div>
     );
 }
