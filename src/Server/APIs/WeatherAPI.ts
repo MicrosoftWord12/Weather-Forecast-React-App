@@ -1,19 +1,24 @@
-import { WeatherRequest, WeatherResponse, WeatherLocationType, WeatherCondition } from "../Types/WeatherTypes";
-import Config from "../Config.json"
-import WeatherCurrent from "./Data/WeatherCurrent";
-import WeatherLocation from "./Data/WeatherLocation";
+import { WeatherRequest, WeatherResponse, WeatherLocationType, WeatherCondition } from "../../Types/WeatherTypes";
+import Config from "../../Config.json"
+import WeatherCurrent from "../Data/WeatherCurrent";
+import WeatherLocation from "../Data/WeatherLocation";
 
 export default class WeatherAPI {
     private API_KEY: string = Config.API_KEY || "";
     // private API_URL: string = "https://api.openweathermap.org/data/3.0/onecall?"
     private API_URL: string = "http://api.weatherapi.com/v1/current.json"
+    private API_URL_LOCATION: string = "London"
 
     private weatherCurrent: WeatherCurrent | undefined
     private weatherLocation: WeatherLocation | undefined
     
-    public async sendWeatherRequest() {
-        const url = `${this.API_URL}?key=${this.API_KEY}&q=London}`
+    public async sendWeatherRequest(API_URL_LOCATION: string) {
+        this.API_URL_LOCATION = API_URL_LOCATION;
+        const url = `${this.API_URL}?key=${this.API_KEY}&q=${this.API_URL_LOCATION}}`
         
+        if(!this.API_URL_LOCATION) throw new Error("No location provided")
+
+
         try{
             const response = await fetch(url)
             const data = await response.json()
