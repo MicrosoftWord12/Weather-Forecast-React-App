@@ -1,11 +1,10 @@
-import { WeatherRequest, WeatherResponse, WeatherLocationType, WeatherCondition } from "../../Types/WeatherTypes";
+import { WeatherCondition } from "../../Types/WeatherTypes";
 import Config from "../../Config.json"
 import WeatherCurrent from "../Data/WeatherCurrent";
 import WeatherLocation from "../Data/WeatherLocation";
 
 export default class WeatherAPI {
     private API_KEY: string = Config.API_KEY || "";
-    // private API_URL: string = "https://api.openweathermap.org/data/3.0/onecall?"
     private API_URL: string = "http://api.weatherapi.com/v1/current.json"
     private API_URL_LOCATION: string = "London"
 
@@ -20,18 +19,17 @@ export default class WeatherAPI {
 
 
         try{
+
             const response = await fetch(url)
             const data = await response.json()
             
-            
-            // this._updateWeatherVariables(data)
             this.weatherCurrent = new WeatherCurrent(data);
             this.weatherLocation = new WeatherLocation(data);
 
 
-            return data;
+            return response;
         }catch(e) {
-            console.log(e)
+            console.log("Error: ")
         }
         
     }
