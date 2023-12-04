@@ -3,7 +3,7 @@ import { IAlertProps } from "../../Types/ComponentProps"
 const Alert = ({ hidden }: IAlertProps) => {
     if(!hidden){
         return (
-            <div ></div>
+            <div className="bg-gray-400"></div>
         )
     }else{
         return (
