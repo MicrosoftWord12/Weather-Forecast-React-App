@@ -1,4 +1,4 @@
-import { FormEvent, useState, useEffect, useMemo, useRef } from 'react'
+import { FormEvent, useState, useEffect, useMemo } from 'react'
 import WeatherAPI from '../../Server/APIs/WeatherAPI'
 import { IWeatherAlertProps } from '../../Types/ComponentProps'
 
@@ -13,7 +13,7 @@ const Weather = ({ setAlert, setAlertMessage }: IWeatherAlertProps) => {
     useEffect(() => {
         const fetchedData = async () => {
             try{
-                const response = await weatherApi.sendWeatherRequest(currentLocation ? currentLocation : defaultValue)
+                await weatherApi.sendWeatherRequest(currentLocation ? currentLocation : defaultValue)
                 setDataUpdated((prev) => !prev)
             }catch(error){
                 console.error('Error fetching data: ', error)
@@ -22,7 +22,7 @@ const Weather = ({ setAlert, setAlertMessage }: IWeatherAlertProps) => {
 
         fetchedData()
 
-    }, [currentLocation])
+    }, [currentLocation, weatherApi])
 
 
     const input = async (data: FormEvent) => {
