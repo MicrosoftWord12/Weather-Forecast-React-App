@@ -42,9 +42,23 @@ const Weather = ({ setAlert, setAlertMessage }: IWeatherAlertProps) => {
     }
 
     return (
-        <div className='flex items-center justify-center h-[80vh] flex-col'>
-            <div className='bg-gray-400 p-[25vh] rounded-full'>
-                <h1 className='font-extrabold text-center text-2xl'>Weather Statistics</h1>
+        <div className='flex flex-col h-screen'>
+            <div className='flex bg-gray-400 rounded-3xl m-24'>
+                <div className='flex'>
+                    <div>
+                        <h1>Current Time: {weatherApi.getLocaltime()}</h1>
+                    </div>
+                    <div></div>
+                </div>
+
+
+
+
+
+
+
+
+                {/* <h1 className='font-extrabold text-center text-2xl'>Weather Statistics</h1>
 
 
                 <form className="flex flex-col justify-center text-center bg-slate-300 rounded-md p-2 m-2" onSubmit={(e) => input(e)}>
@@ -64,7 +78,7 @@ const Weather = ({ setAlert, setAlertMessage }: IWeatherAlertProps) => {
                     <div>
                         <p>Temperature: {weatherApi.getFeelsLikeC() + "C"}</p>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
